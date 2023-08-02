@@ -1,0 +1,77 @@
+h1,
+p {
+  font-family: Lato;
+}
+#root{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+#display {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.drum-pad .row .col {
+  border: 1px solid white;
+}
+
+
+
+*/
+
+input[type='range']{
+  rotate: 90deg;
+  
+  color: black;
+  /*writing-mode: bt-lr; * IE *
+    -webkit-appearance: slider-vertical; * Chromium **/
+    
+}
+
+.slidecontainer {
+  display: flex;
+align-items: center;
+justify-content: center;
+}
+
+
+#drum-machine {
+  color: white;
+  width: 100%;
+  padding: 20px;
+}
+
+#display {
+  height: 100%;
+}
+.drum-pad {
+  background-color: black;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.drum-pad > .col{
+  margin: 20px;
+  }
+
+.drum-pad .col{
+padding: 20px;
+}
+
+.drum-pad > .col > .row > .col{
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
