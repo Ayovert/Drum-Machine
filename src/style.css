@@ -41,6 +41,11 @@ input[type='range'] {
   height: 30vh;
 }
 
+#volume {
+  position: relative;
+  right: 45px;
+}
+
 #drum-machine {
   color: white;
   width: 100%;
@@ -55,6 +60,21 @@ input[type='range'] {
   align-items: center;
   justify-content: center;
   padding: 20px;
+}
+
+.soundControl {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.row .col-4 {
+  cursor: pointer;
+}
+
+.activeKey {
+  background-color: red;
 }
 
 .drum-pad > .col {

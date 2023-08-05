@@ -17,8 +17,10 @@ export default function App() {
 
   const [currSound, setCurrSound] = useState('Sound Machine');
 
+  const [activeKey, setActiveKey] = useState('');
+
   function playAudio(id: string) {
-    console.log(volume, "play");
+    console.log(volume, 'play');
     const target = document.getElementById(id) as HTMLMediaElement;
     target.volume = volume;
 
@@ -28,8 +30,12 @@ export default function App() {
     //console.log(sound.arr[index].name);
 
     setCurrSound(sound.arr[index].name);
+    setActiveKey(id);
+
+    setTimeout(() => {
+      setActiveKey('');
+    }, 200);
     if (target !== null) {
-      
       target.load();
       target.play();
     }
@@ -46,9 +52,9 @@ export default function App() {
     }
   };
 
-  const changeVolume = (volume: number) =>{
+  const changeVolume = (volume: number) => {
     setVolume(volume);
-  }
+  };
 
   const changeSound = useCallback(() => {
     setSound(sound === sounds[0] ? sounds[1] : sounds[0]);
@@ -71,10 +77,15 @@ export default function App() {
           <div className="col">
             <div className="row">
               {sound.arr.map((sound, index) => {
+                console.log(activeKey);
                 return (
                   <div
                     key={index}
-                    className="col col-4"
+                    className={`col col-4 ${
+                      activeKey === sound.key ? 'activeKey' : ''
+                    }`}
+                    //onClick={() => setActiveKey(index.toString())}
+                    // onMouseUp={()=>setActiveKey("")}
                     onClick={() => playAudio(sound.key)}
                   >
                     {sound.key}
@@ -88,7 +99,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="col">
+          <div className="col soundControl">
             <div className="slidecontainer">
               <input
                 type="range"
@@ -103,8 +114,8 @@ export default function App() {
                 className="slider"
                 id="myRange"
               />
-              <p>
-                Value: <span id="demo">{Math.floor(volume * 10)}</span>
+              <p id="volume">
+                Volume :: <span>{Math.floor(volume * 10)}</span>
               </p>
             </div>
 
