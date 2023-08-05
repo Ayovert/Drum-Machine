@@ -1,4 +1,6 @@
-export const sounds1 = [
+
+
+const sounds1 = [
   {
     key: 'Q',
     keyCode: 81,
@@ -63,7 +65,7 @@ export const sounds1 = [
   },
 ];
 
-export const sounds2 = [
+const sounds2 = [
   {
     key: 'Q',
     keyCode: 81,
@@ -127,3 +129,9 @@ export const sounds2 = [
     src: 'https://s3.amazonaws.com/freecodecamp/drums/Brk_Snr.mp3',
   },
 ];
+
+
+export const sounds = [
+  {name: "Sounds 1", arr: [...sounds1]},
+  {name: "Sounds 2", arr: [...sounds2]}
+]

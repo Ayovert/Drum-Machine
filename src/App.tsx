@@ -1,43 +1,68 @@
+import { auto, right } from '@popperjs/core';
 import * as React from 'react';
 import { useRef } from 'react';
+import { useCallback } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { sounds1 } from './data';
+import { sounds } from './data';
 
 import './style.css';
 
 export default function App() {
-  const [volume, setVolume] = useState(0);
+  const [volume, setVolume] = useState(0.77);
   const [muted, setMuted] = useState(false);
   const refs = useRef<HTMLInputElement>(null);
 
-  function playAudio(id: string) {
-    const target = document.getElementById(id) as HTMLMediaElement;
+  const [sound, setSound] = useState(sounds[0]);
 
+  const [currSound, setCurrSound] = useState('Sound Machine');
+
+  function playAudio(id: string) {
+    console.log(volume, "play");
+    const target = document.getElementById(id) as HTMLMediaElement;
+    target.volume = volume;
+
+    //console.log(sound.arr.findIndex((x) => x.key == id));
+
+    const index = sound.arr.findIndex((x) => x.key == id);
+    //console.log(sound.arr[index].name);
+
+    setCurrSound(sound.arr[index].name);
     if (target !== null) {
+      
+      target.load();
       target.play();
     }
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    console.log(event.key.toUpperCase());
+    //  console.log(event.key.toUpperCase());
 
     const key = event.key.toUpperCase();
-    const keyExists = sounds1.some((x) => x.key === key);
+    const keyExists = sound.arr.some((x) => x.key === key);
 
     if (keyExists) {
       playAudio(key);
     }
   };
 
+  const changeVolume = (volume: number) =>{
+    setVolume(volume);
+  }
+
+  const changeSound = useCallback(() => {
+    setSound(sound === sounds[0] ? sounds[1] : sounds[0]);
+  }, [sound]);
+
   useEffect(() => {
+    setVolume(volume);
     document.addEventListener('keydown', handleKeyDown);
 
     // cleanup this component
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [volume]);
 
   return (
     <div id="drum-machine">
@@ -45,7 +70,7 @@ export default function App() {
         <div className="row drum-pad">
           <div className="col">
             <div className="row">
-              {sounds1.map((sound, index) => {
+              {sound.arr.map((sound, index) => {
                 return (
                   <div
                     key={index}
@@ -68,24 +93,35 @@ export default function App() {
               <input
                 type="range"
                 min={0}
-                max={10}
-                step={2}
+                max={1}
+                step={0.01}
                 value={volume}
                 onChange={(e) => {
-                  setVolume(e.target.valueAsNumber);
+                  console.log(e.target.valueAsNumber);
+                  changeVolume(e.target.valueAsNumber);
                 }}
                 className="slider"
                 id="myRange"
               />
               <p>
-                Value: <span id="demo">{volume}</span>
+                Value: <span id="demo">{Math.floor(volume * 10)}</span>
               </p>
+            </div>
+
+            <div id="currSound">{currSound}</div>
+
+            <div id="soundSwitch">
+              {sound.name}
+              <div id="switchControl" onClick={changeSound}>
+                <div
+                  id="innerSwitch"
+                  style={{ float: sound === sounds[0] ? 'left' : 'right' }}
+                ></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <h1>Hello StackBlitz!</h1>
-      <p>Start editing to see some magic happen :)</p>
     </div>
   );
 }
