@@ -72,7 +72,7 @@ export default function App() {
 
   return (
     <div id="drum-machine">
-      <div id="display">
+     
         <div className="row drum-pad">
           <div className="col">
             <div className="row">
@@ -119,7 +119,7 @@ export default function App() {
               </p>
             </div>
 
-            <div id="currSound">{currSound}</div>
+            <div id="display">{currSound}</div>
 
             <div id="soundSwitch">
               {sound.name}
@@ -132,7 +132,7 @@ export default function App() {
             </div>
           </div>
         </div>
-      </div>
+    
     </div>
   );
 }
